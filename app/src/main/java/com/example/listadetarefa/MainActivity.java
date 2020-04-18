@@ -1,13 +1,16 @@
 package com.example.listadetarefa;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.listadetarefa.adapter.TaskAdapter;
 import com.example.listadetarefa.model.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
@@ -16,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<Task> tasks = new ArrayList<>();
+    private FloatingActionButton btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
         Task task = new Task("Come o cu de quem ta lendo.");
 
+       
         tasks.add(task);
         tasks.add(task);
         tasks.add(task);
@@ -44,5 +49,16 @@ public class MainActivity extends AppCompatActivity {
         mAdapter = new TaskAdapter(tasks);
         recyclerView.setAdapter(mAdapter);
 
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 999 && resultCode == RESULT_OK) {
+
+            Task task = (Task) data.getSerializableExtra("task");
+            tasks.add(task);
+            mAdapter.notifyDataSetChanged();
+        }
     }
 }

@@ -1,6 +1,8 @@
 package com.example.listadetarefa.model;
 
-public class Task {
+import java.io.Serializable;
+
+public class Task  implements Serializable {
     private String title;
 
     public Task(String title) {
