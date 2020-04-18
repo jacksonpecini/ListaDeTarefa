@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.example.listadetarefa.adapter.TaskAdapter;
 import com.example.listadetarefa.model.Task;
@@ -26,14 +27,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Task task = new Task("Come o cu de quem ta lendo.");
+        btn = findViewById(R.id.floatingActionButton);
 
-       
-        tasks.add(task);
-        tasks.add(task);
-        tasks.add(task);
-        tasks.add(task);
-        tasks.add(task);
+        View.OnClickListener onClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openTaskActivity();
+            }
+        };
+
+        btn.setOnClickListener(onClickListener);
 
         recyclerView = (RecyclerView) findViewById(R.id.task_list);
 
@@ -60,5 +63,10 @@ public class MainActivity extends AppCompatActivity {
             tasks.add(task);
             mAdapter.notifyDataSetChanged();
         }
+    }
+
+    public void openTaskActivity() {
+        Intent intent = new Intent(this, TaskActivity.class);
+        startActivityForResult(intent, 999);
     }
 }
